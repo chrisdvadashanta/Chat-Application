@@ -37,7 +37,7 @@ const Start = ({ navigation }) => {
         <View style={styles.inputContainer}>
           <Icon name="user" size={20} color="#000" style={styles.icon} />
           <TextInput
-            style={[styles.textInput ,  { color: '#000', backgroundColor: 'transparent' }]}
+            style={styles.textInput}
             value={name}
             onChangeText={setName}
             placeholder="Type your username here"
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     margin: 20,
     position: "relative",
-    backgroundColor: "rgba(255, 255, 255)"
+    backgroundColor: "white"
   },
   icon: {
     position: "absolute",
