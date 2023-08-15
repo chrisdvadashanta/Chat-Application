@@ -7,7 +7,7 @@ import {
   TextInput,
   Alert,
   ImageBackground,
-  Button
+  KeyboardAvoidingView
 } from "react-native";
 
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -42,6 +42,7 @@ const Start = ({ navigation }) => {
             onChangeText={setName}
             placeholder="Type your username here"
           />
+       { Platform.OS === 'ios' ? <KeyboardAvoidingView behavior="padding" /> : null }
         </View>
         {/* bgColor buttons */}
         <View style={styles.containerBgColor}>
