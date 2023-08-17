@@ -1,36 +1,52 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, View, KeyboardAvoidingView } from "react-native";
 import { GiftedChat, Bubble } from "react-native-gifted-chat";
+import { collection, addDoc, onSnapshot, query, Timestamp, orderBy } from "firebase/firestore";
 
-const Chat = ({ route, navigation }) => {
+const Chat = ({ route, navigation, db }) => {
   const [messages, setMessages] = useState([]);
-  const { name, backgroundColor } = route.params;
+  const { name, backgroundColor, userID } = route.params;
   
   useEffect(() => {
     navigation.setOptions({ title: name });
-    setMessages([
-      {
-        _id: 1,
-        text: "Hello developer",
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: "React Native",
-          avatar: "https://placeimg.com/140/140/any",
-        },
-      },
-    ]);
+    const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
+    const unsubMessages = onSnapshot(q, (documentsSnapshot) => {
+      let newMessages = [];
+      documentsSnapshot.forEach(doc => {
+        const data = doc.data();
+        const createdAt = data.createdAt?.toDate(); // Convert Firestore Timestamp to JavaScript Date
+        newMessages.push({
+          _id: doc.id,
+          text: data.text,
+          createdAt: createdAt,
+          user: {
+            _id: data.user._id,
+            name: data.user.name,
+          },
+        });
+      });
+      setMessages(newMessages);
+    });
+    // Clean up code
+    return () => {
+      if (unsubMessages) unsubMessages();
+    }
   }, []);
  
   const containerStyle = {
     ...styles.container,
     backgroundColor: backgroundColor,
   };
+//// Updating the send Message
+const onSend = (newMessages) => {
+  const messageToSave = {
+      ...newMessages[0],
+      createdAt: Timestamp.fromDate(newMessages[0].createdAt)
+  };
 
-  const onSend = (newMessages) => {
-    setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages))
-  }
-
+  addDoc(collection(db, "messages"), messageToSave);
+}
+ 
   const renderBubble = (props) => {
     console.log("Rendering bubble...");
     return ( <Bubble
@@ -59,7 +75,10 @@ const Chat = ({ route, navigation }) => {
       messages={messages}
       renderBubble={renderBubble}
       onSend={messages => onSend(messages)}
-      user={{ _id: 1 }}
+      user={{
+        _id: userID,
+        name: name
+      }}
     />
     </KeyboardAvoidingView>
     </View>
