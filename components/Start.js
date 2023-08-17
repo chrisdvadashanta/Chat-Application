@@ -7,23 +7,41 @@ import {
   TextInput,
   Alert,
   ImageBackground,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  LogBox
 } from "react-native";
+import { getAuth, signInAnonymously } from "firebase/auth";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
+/// Logs to prevent messages in App
+LogBox.ignoreLogs(["AsyncStorage has been extracted from"]);
+
 const Start = ({ navigation }) => {
+  
+  ///// States 
   const [name, setName] = useState("");
   const [bgColor, setBgColor] = useState("");
 
-  const navigateToChat = () => {
-    if (name.trim().length > 0) {
-      // checks if the name has non-whitespace characters
-      navigation.navigate("Chat", { name: name , backgroundColor: bgColor});
-    } else {
-      Alert.alert("Error", "Please enter a username before proceeding."); // provides a feedback to the user
+  //   USer Authentication
+  const auth = getAuth();
+
+  const signInUser = () => {
+    if(!name.trim()) {
+        Alert.alert("Please enter a username before proceeding.");
+        return;
     }
-  };
+
+    signInAnonymously(auth)
+      .then(result => {
+        navigation.navigate("Chat", {userID: result.user.uid , name: name , backgroundColor: bgColor });
+        Alert.alert("Signed in Successfully!");
+      })
+      .catch((error) => {
+        Alert.alert("Unable to sign in, try later again.");
+      })
+}
+
 
   return (
     <View style={styles.container}>
@@ -51,7 +69,7 @@ const Start = ({ navigation }) => {
         <TouchableOpacity style={styles.buttonBlue} onPress={() => setBgColor('blue')} />
         <TouchableOpacity style={styles.buttonBrown} onPress={() => setBgColor('brown')} />
         </View>
-        <TouchableOpacity style={styles.buttonChat} onPress={navigateToChat}>
+        <TouchableOpacity style={styles.buttonChat} onPress={ signInUser }>
           <Text> Go to Chat </Text>
         </TouchableOpacity>
       </ImageBackground>
