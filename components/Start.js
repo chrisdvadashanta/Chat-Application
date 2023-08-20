@@ -1,15 +1,6 @@
 import { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  Alert,
-  ImageBackground,
-  KeyboardAvoidingView,
-  LogBox
-} from "react-native";
+import { StyleSheet, View, Text,TouchableOpacity, TextInput, Alert, 
+  ImageBackground, KeyboardAvoidingView, LogBox } from "react-native";
 import { getAuth, signInAnonymously } from "firebase/auth";
 
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -41,7 +32,6 @@ const Start = ({ navigation }) => {
         Alert.alert("Unable to sign in, try later again.");
       })
 }
-
 
   return (
     <View style={styles.container}>
@@ -138,13 +128,6 @@ const styles = StyleSheet.create({
     borderRadius: 25, // Half the width and height to make it a circle
     marginHorizontal: 5  // Add some margin for spacing
   },
-  // hoveredButtonGreen:{
-  //   backgroundColor: 'green',
-  //   width: 50,
-  //   height: 50,
-  //   borderRadius: 25, // Half the width and height to make it a circle
-  //   marginHorizontal: 5  // Add some margin for spacing
-  // },
   buttonOrange: {
     backgroundColor: 'orange',
     width: 50,
