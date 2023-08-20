@@ -1,6 +1,11 @@
+<img width="373" alt="Screenshot 2023-08-20 at 21 18 37" src="https://github.com/chrisdvadashanta/Chat-Application/assets/127535781/a1f6f6ed-7327-4039-b868-9ead2e03cfad">
 # Chat App
 
 The app provides users with a chat interface and options to share images and their locations.
+
+![Uploading Screenshot 2023-08-20 at 21.17.28.png…]()
+![Uploading Screenshot 2023-08-20 at 21.17.37.png…]()
+
 
 ## Key Features ##
 - User Registeration: A page where users can enter their name and choose a background color for the chat screen before joining the chat. 
