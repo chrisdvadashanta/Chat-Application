@@ -32,8 +32,8 @@ The app provides users with a chat interface and options to share images and the
 ## Setting up ##
 ### Environment Setup ###
 install node and expo
-   ``` $ npm install node ```
-  ```  $ npm install -g expo-cli```
+    ```npm install node```
+    ```npm install -g expo-cli```
 ### Database ###
 - using firebase as a database for the chat and the images
     https://firebase.google.com/
@@ -41,5 +41,5 @@ install node and expo
 - Clone the GitHub repository https://github.com/chrisdvadashanta/Chat-Application/archive/refs/heads/main.zip
 - "app.js" file: replace the existing "firebaseConfig" object with the configuration object obtained from Firebase.
 - Start the project with:
-```$ expo start```
+```expo start```
 - use the Expo Go app to run the mobile app with XCode or AndroidStudio on your Device or on a mobile device by scanning the Code from the expo start command.
